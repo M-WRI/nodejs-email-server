@@ -65,7 +65,7 @@ app.post("/send", (req, res) => {
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       host: "smtp.strato.de",
-      port: 465,
+      port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
         user: "test@hemdundfliege.com", // generated ethereal user
