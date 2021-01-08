@@ -33,19 +33,31 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", (req, res) => {
-  console.log(req.body);
+  console.log(req.body, "<---- GATSBY");
+
+  const {
+    anlass,
+    date1,
+    date3,
+    email,
+    formatted_adress,
+    name,
+    priceTotal,
+    telephone,
+    userMessage,
+  } = req.body;
 
   const output = `
       <p>You have a new contact request</p>
       <h3>Contact Details</h3>
       <ul>
-          <li>Name: ${req.body.name}</li>
-          <li>Company: ${req.body.company}</li>
-          <li>Email: ${req.body.email}</li>
-          <li>Phone: ${req.body.phone}</li>
+          <li>Name: ${name}</li>
+          <li>Company: ${priceTotal}</li>
+          <li>Email: ${email}</li>
+          <li>Phone: ${telephone}</li>
       </ul>
       <h3>Message</h3>
-      <p>${req.body.message}</p>
+      <p>${userMessage}</p>
     `;
 
   // async..await is not allowed in global scope, must use a wrapper
@@ -64,7 +76,7 @@ app.post("/send", (req, res) => {
     // send mail with defined transport object
     let info = await transporter.sendMail({
       from: '"Moritz Wright" <test@hemdundfliege.com>', // sender address
-      to: req.body.email, // list of receivers
+      to: email, // list of receivers
       subject: "Hello ✔", // Subject line
       text: "Hello world?", // plain text body
       html: output, // html body
