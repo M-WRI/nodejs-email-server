@@ -4,6 +4,9 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const nodemailer = require("nodemailer");
 
+// ENV
+require("dotenv").config();
+
 const log = console.log;
 
 const app = express();
@@ -68,14 +71,14 @@ app.post("/send", (req, res) => {
       port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: "test@hemdundfliege.com", // generated ethereal user
-        pass: "s71+56&bHnA,X%SU", // generated ethereal password
+        user: process.env.MAIN_EMAIL, // generated ethereal user
+        pass: process.env.EMAIL_PASSWORD, // generated ethereal password
       },
     });
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-      from: '"Moritz Wright" <test@hemdundfliege.com>', // sender address
+      from: `"Moritz Wright" <${process.env.MAIN_EMAIL}>`, // sender address
       to: email, // list of receivers
       subject: "Hello ✔", // Subject line
       text: "Hello world?", // plain text body
@@ -94,4 +97,6 @@ app.post("/send", (req, res) => {
   main().catch(console.error);
 });
 
-app.listen(8080, () => log(`Server is connected on port 8080`));
+app.listen(process.env.PORT, () =>
+  log(`Server is connected on port ${process.env.PORT}`)
+);
